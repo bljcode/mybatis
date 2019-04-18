@@ -20,10 +20,11 @@ package org.apache.ibatis.executor;
  */
 /**
  * 
- * 错误上下文
+ * 错误上下文；
+ * fan:内部一个静态类，初始化实例，外部用的时候便于链式操作，减少set操作
  */
 public class ErrorContext {
-  // 获得 \n 不同的操作系统不一样
+  // 获得 \n 不同的操作系统不一样， fan:可以输出System.getProperties()看看共有哪些属性，另外System.getenv()可以看看运行环境
   private static final String LINE_SEPARATOR = System.getProperty("line.separator","\n");
   //每个线程给开一个错误上下文，防止多线程问题
   private static final ThreadLocal<ErrorContext> LOCAL = new ThreadLocal<ErrorContext>();
@@ -44,7 +45,7 @@ public class ErrorContext {
   public static ErrorContext instance() {
       //因为是多线程，所以用了ThreadLocal  线程安全
     ErrorContext context = LOCAL.get();
-      //懒汉 单例模式
+      //懒汉 单例模式, fan: 上面ThreadLocal 所以这里不需要锁了
     if (context == null) {
       context = new ErrorContext();
       LOCAL.set(context);
@@ -53,12 +54,13 @@ public class ErrorContext {
   }
 
   //啥意思？把ErrorContext存起来供后用？并把ThreadLocal里的东西清空了？
+  //fan: 是不是想备忘录模式啊？
   public ErrorContext store() {
     stored = this;
     LOCAL.set(new ErrorContext());
     return LOCAL.get();
   }
-
+  //fan：BaseStatementHandler中用了store recall 这两个
   //应该是和store相对应的方法，store是存储起来，recall是召回
   public ErrorContext recall() {
     if (stored != null) {

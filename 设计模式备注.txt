@@ -1,0 +1,15 @@
+                1. ErrorContext.java 建造者模式、单例
+                                                 也是一个打印返回异常的处理示例 ExceptionFactory  ——》 ErroContext
+
+                2.SqlSessionFactoryBuilder 构建 SqlSessionFactory（工厂模式），需要Configuration，比较复杂，所以构建和表示分离，Builder模式
+
+
+                3.代理模式（最精髓的），MapperProxy.java
+
+                4.组合模式，解析sql , SqlNode.java 接口所有实现，都是整个组合模式树的各个节点
+
+                5.Executor --》BaseExecutor.java 模板方法，虽然只是几个简单的抽象类给子类实现，并不是很多步一步一步，像定义示例那么明显
+
+                6.装饰模式： FifoCache , LruCahe,, 功能一般都委托给包装的cache去做，附带某些功能，所以是装饰模式
+
+                其他如，迭代器（PropertyTokenizer）等

@@ -55,7 +55,7 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
         throw ExceptionUtil.unwrapThrowable(t);
       }
     }
-    //这里优化了，去缓存中找MapperMethod
+    //这里优化了，去缓存中找MapperMethod； fan:需要Mybatis代理实现的方法达到这里；
     final MapperMethod mapperMethod = cachedMapperMethod(method);
     //执行
     return mapperMethod.execute(sqlSession, args);

@@ -29,6 +29,7 @@ import org.apache.ibatis.cache.Cache;
 /*
  * 最近最少使用缓存
  * 基于 LinkedHashMap 覆盖其 removeEldestEntry 方法实现。
+ * fan: 这个线程安全么
  */
 public class LruCache implements Cache {
 

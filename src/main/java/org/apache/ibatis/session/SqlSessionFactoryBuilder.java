@@ -28,6 +28,13 @@ import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 /*
  * Builds {@link SqlSession} instances.
  * 构建SqlSessionFactory的工厂.工厂模式
+ * fan: 构造SqlSessionFactory，需要Configuration，比较复杂，所以构建和表示分离，Builder模式；最后一个方法SqlSessionFactory build 是标志
+ * 另外XMLConfigBuilder在创建Configuration对象时，也有一个XMLMapperBuilder来处理*Mapper文件，
+ * XMLMapperBuilder也--》XMLStatementBuilder来读取和build所有的SQL语句。
+ * 相似的情况就是这些Builder会读取文件或者配置，
+ * 有大量的XpathParser解析、配置或语法的解析、反射生成对象、缓存结果等操作，这些工作超过了一个构造函数的能力，
+ * 所有有大量的Builder模式。
+ *
  *
  */
 /**
