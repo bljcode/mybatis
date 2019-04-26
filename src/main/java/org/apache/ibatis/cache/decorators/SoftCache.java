@@ -28,6 +28,9 @@ import org.apache.ibatis.cache.Cache;
  * Thanks to Dr. Heinz Kabutz for his guidance here.
  * 软引用缓存,核心是SoftReference
  *
+ * fan:如果内存空间足够，垃圾回收器就不会回收它，如果内存空间不足了，就会回收这些对象的内存。
+ *   只要垃圾回收器没有回收它，该对象就可以被程序使用。软引用可用来实现内存敏感的高速缓存
+ *
  * @author Clinton Begin
  */
 public class SoftCache implements Cache {
@@ -82,7 +85,7 @@ public class SoftCache implements Cache {
       } else {
         // See #586 (and #335) modifications need more than a read lock 
         synchronized (hardLinksToAvoidGarbageCollection) {
-            //存入经常访问的键值到链表(最多256元素),防止垃圾回收
+            //存入经常访问的键值到链表(最多256元素),防止垃圾回收 fan:一个强引用维持最近使用，实现了一个类似的LRU? 一个对象除了soft引用还有强引用指向它
           hardLinksToAvoidGarbageCollection.addFirst(result);
           if (hardLinksToAvoidGarbageCollection.size() > numberOfHardLinks) {
             hardLinksToAvoidGarbageCollection.removeLast();
